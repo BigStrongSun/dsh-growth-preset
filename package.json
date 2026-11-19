@@ -1,0 +1,22 @@
+{
+  "name": "@local/dsh-growth-preset",
+  "version": "2.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "cordis.patch.yml",
+    "README.md",
+    "DESIGN.md",
+    "skills/teaching-loop/SKILL.md",
+    "locale/*.json",
+    "icon.svg"
+  ],
+  "dsh": { "bundle": { "patch": "./cordis.patch.yml" } }
+}

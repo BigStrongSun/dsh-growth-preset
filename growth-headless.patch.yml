@@ -1,0 +1,8 @@
+# Positive-path test overlay: mounts the growth-teacher row directly (no preset
+# seat) so a headless run can verify plugin load, listener registration, and
+# cue injection. Path row names import as raw file URLs — ESM does not resolve
+# a directory through package.json exports here, so name index.js exactly.
+- insert:
+    - id: growth-teacher
+      name: './index.js'
+      config: {}
