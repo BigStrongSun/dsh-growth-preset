@@ -74,6 +74,12 @@
 
 ## 故障排查记录
 
+- **`YAMLException: unknown tag !!js`**（2026-11-20，roglinux 共享 Host 0.2.2-alpha.3）：
+  js-yaml 的 `!!js` 只注册在**标量**节点上；值若以 `[` 开头会被解析成 flow sequence，
+  标签匹配失败抛错，`loadProfileDirectory` 把整个 bundle 记入 `skippedBundles` **静默跳过**
+  ——症状是点 "+" 报 `agent-preset/not-found: Unknown agent preset: growth`，而 journal 一片干净。
+  修法：表达式加外层括号保持标量形态。定位手段：直接 `import` app-boot 调
+  `loadProfileDirectory`，打印 `skippedBundles` 的 reason。
 - **`agent-preset/invalid: growth-teacher: never started`**（2026-11-17，GUI 新建会话）根因链：
   1. profile 的 node_modules 里**没有任何 `@deepseek-ai/*` 包**（实测计数 0，`.pnpm` 空），
      而 pnpm 对目录 bundle 是 **link**——包的 realpath 在 `Documents\dsh-modes\`，

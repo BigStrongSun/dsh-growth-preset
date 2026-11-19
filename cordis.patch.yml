@@ -136,7 +136,9 @@
                 # bundle's own skills dir by install convention, first existing wins:
                 #   Linux/Unix  ~/dsh-modes/growth-preset/skills
                 #   Windows     ~/Documents/dsh-modes/growth-preset/skills
-                - !!js [(process.env.HOME || process.env.USERPROFILE || '') + '/dsh-modes/growth-preset/skills', (process.env.HOME || process.env.USERPROFILE || '') + '/Documents/dsh-modes/growth-preset/skills'].find(p => process.getBuiltinModule('node:fs').existsSync(p))
+                # Parenthesized: js-yaml registers !!js for scalar nodes only, a bare
+                # "[...]" would parse as a flow sequence and fail the tag (skipped bundle).
+                - !!js (['/dsh-modes/growth-preset/skills', '/Documents/dsh-modes/growth-preset/skills'].map(s => (process.env.HOME || process.env.USERPROFILE || '') + s).find(p => process.getBuiltinModule('node:fs').existsSync(p)))
           - id: tool-skill
             name: '@deepseek-ai/dsh-tool-skill'
           - id: present
